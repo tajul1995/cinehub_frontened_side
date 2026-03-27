@@ -106,7 +106,7 @@ export default function PopularGallery() {
       </motion.h2>
 
       {/* Scroll Container */}
-      <div className="grid grid-cols-4 gap-6 overflow-x-auto scrollbar-hide scroll-smooth">
+      <div className="grid grid-cols-4  gap-6 overflow-x-auto scrollbar-hide scroll-smooth">
         {movies.map((movie, index) => (
           <motion.div
             key={movie.id}

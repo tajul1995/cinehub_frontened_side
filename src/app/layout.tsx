@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/themProviders";
+import QueryProviders from "@/providers/QuertyProviders";
 // import { Navbar } from "@/components/shared/Navbar";
 
 const geistSans = Geist({
@@ -36,8 +37,10 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-          
+          <QueryProviders>
             {children}
+          </QueryProviders>
+            
           </ThemeProvider>
         
         </body>

@@ -1,10 +1,19 @@
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import React from 'react'
+import { getAllMovies } from './_action';
+import AllMovies from '@/components/modules/movies/AllMovies';
 
-const MoviesPage = () => {
+const MoviesPage =async () => {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ["movies"],
+    queryFn: getAllMovies,
+  });
   return (
-    <div>
-      <h2>all movies</h2>
-    </div>
+     <HydrationBoundary state={dehydrate(queryClient)} >
+      <AllMovies />
+   </HydrationBoundary>
   )
 }
 

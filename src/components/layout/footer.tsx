@@ -16,7 +16,7 @@ export default function Footer() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
         >
-          <h1 className="text-2xl font-bold mb-4">🎬 MoviePortal</h1>
+          <h1 className="text-2xl font-bold mb-4">🎬 CineHub</h1>
           <p className="text-gray-400">
             Discover, rate, and stream your favorite movies and series anytime.
           </p>
@@ -72,7 +72,7 @@ export default function Footer() {
       <div className="border-t border-gray-800 py-6 px-6 max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
 
         <p className="text-gray-400 font-bold text-xl text-center">
-          © {new Date().getFullYear()} MoviePortal. All rights reserved.
+          © {new Date().getFullYear()} CineHub. All rights reserved.
         </p>
 
         {/* Social Icons */}
