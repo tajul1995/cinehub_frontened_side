@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button";
+import BannerCarousel from "@/components/home/Banner";
+
 
 export default function Home() {
   return (
-    <div>
-        Common
-      <Button variant="outline">Hello World</Button>
+    <div className="w-7xl mx-auto">
+     <BannerCarousel></BannerCarousel>
     </div>
   );
 }

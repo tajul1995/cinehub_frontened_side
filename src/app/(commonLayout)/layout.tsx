@@ -1,3 +1,5 @@
+import { Navbar1 } from "@/components/navbar1";
+
 export default function CommonLayout({
   children,
 }: Readonly<{
@@ -5,7 +7,7 @@ export default function CommonLayout({
 }>) {
   return (
    <>
-   Common Layout
+   <Navbar1></Navbar1>
    {children}
    </>
   );
