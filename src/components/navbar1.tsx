@@ -31,6 +31,7 @@ import Link from "next/link";
 //  import { authClient } from "@/lib/auth-client";
 
 import { useEffect, useState } from "react";
+import { httpClient } from "@/lib/axios/httpClient";
 
 
 interface MenuItem {
@@ -112,7 +113,7 @@ const Navbar = ({
   const [session, setSession] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+   useEffect(() => {
   const fetchData = async () => {
     try {
       const res = await fetch("http://localhost:5000/api/v1/auth/me", {
@@ -131,6 +132,7 @@ const Navbar = ({
 
   fetchData();
 }, []);
+
 
     
 // if(loading) return <div>Loading...</div>
