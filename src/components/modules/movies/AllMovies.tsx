@@ -13,7 +13,7 @@ const AllMovies = () => {
        queryFn: () => getAllMovies(),
      });
 
-     console.log(data);
+    //  console.log(data);
   return (
     <div className="grid grid-cols-4 gap-3 max-w-7xl mx-auto mt-4">
       {

@@ -12,7 +12,7 @@ if(!API_BASE_URL) {
 const axiosInstance = () => {
     const instance = axios.create({
         baseURL : API_BASE_URL,
-        timeout : 30000,
+        timeout : 700000,
         headers:{
             'Content-Type' : 'application/json',
         }

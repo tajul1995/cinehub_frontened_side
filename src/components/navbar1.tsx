@@ -1,11 +1,9 @@
 "use client";
 
-import {  Menu} from "lucide-react";
-//  NavigationMenu,
-  
-//   NavigationMenuItem,
-//   NavigationMenuLink,
-//   NavigationMenuList,
+import { Menu } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+
 import {
   Accordion,
   AccordionContent,
@@ -15,11 +13,11 @@ import {
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
-  // NavigationMenuContent,
+  
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-  // NavigationMenuTrigger,
+
 } from "@/components/ui/navigation-menu";
 import {
   Sheet,
@@ -28,7 +26,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { cn } from "@/lib/utils";
+import Link from "next/link";
+
+//  import { authClient } from "@/lib/auth-client";
+
+import { useEffect, useState } from "react";
+
 
 interface MenuItem {
   title: string;
@@ -41,7 +44,7 @@ interface MenuItem {
 interface Navbar1Props {
   className?: string;
   logo?: {
-      url: string;
+    url: string;
     src: string;
     alt: string;
     title: string;
@@ -57,35 +60,108 @@ interface Navbar1Props {
       title: string;
       url: string;
     };
+    // provider: {
+    //   title: string;
+    //   url: string;
+    // };
+    signout: {
+      title: string;
+      
+    };
   };
 }
 
-const Navbar1 = ({
-  logo = {
-    url: "https://www.shadcnblock",
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg",
+// "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg"
 
+const Navbar = ({
+  logo = {
+    url: "https://www.shadcnblocks.com",
+    src:"https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg",
     alt: "logo",
-    title: "CINEHUB",
+    title: "FoodHuB.com",
   },
   menu = [
     { title: "Home", url: "/" },
     
     {
-      title: "Movies",
+      title: "movies",
       url: "/movies",
     },
     {
-      title: "Blog",
-      url: "#",
-    },
+      title: "PAYMENT",
+      url: "/cart",
+    },{
+      title: "DASHBOARD",
+      url: "/dashboard",
+    }
+    // {
+    //   title: "menudatiles",
+    //   url: "/menudatiles",
+    // },
   ],
   auth = {
-    login: { title: "Login", url: "#" },
-    signup: { title: "Sign up", url: "#" },
+    login: { title: "Login", url: "/login" },
+    signup: { title: "Register", url: "/register" },
+    // provider: { title: "provider", url: "/provider" },
+    signout: { title: "signout" },
   },
   className,
 }: Navbar1Props) => {
+  
+
+  const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/v1/auth/me", {
+        credentials: "include",
+      });
+
+      const result = await res.json();
+
+      if (res.ok) {
+        setSession(result); // or result.data depending API
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  fetchData();
+}, []);
+
+    
+// if(loading) return <div>Loading...</div>
+  console.log(session)
+  //  const session1 = authClient.useSession()
+  //   // console.log(session.data?.user.id)
+  // // const userId =session.data?.user.id
+  // console.log("session",session1)
+
+// const router=useRouter()
+const handleTosignOut = async () => {
+  try {
+    const res = await fetch(
+      "http://localhost:5000/api/v1/auth/logout",
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
+
+    if (!res.ok) throw new Error("Logout failed");
+
+    setSession(null); // 🔥 FIX UI instantly
+   
+  } catch (error) {
+    console.error("Logout error:", error);
+  }finally {
+      setLoading(false); // 🔥 VERY IMPORTANT
+    }
+};
+
   return (
     <section className={cn("py-4", className)}>
       <div className="container max-w-7xl mx-auto p-4">
@@ -96,7 +172,7 @@ const Navbar1 = ({
             <a href={logo.url} className="flex items-center gap-2">
               <img
                 src={logo.src}
-                className="max-h-8 dark:invert "
+                className="max-h-8 dark:invert"
                 alt={logo.alt}
               />
               <span className="text-lg font-semibold tracking-tighter">
@@ -112,12 +188,39 @@ const Navbar1 = ({
             </div>
           </div>
           <div className="flex gap-2">
+            {
+              session? 
+                  <>
+                    <Button  onClick={()=>handleTosignOut()}>
+                      signout
+                    </Button>
+                    
+                  </>
+                  
+                  :<>
+                      <Button asChild variant="outline">
+
+                      <Link href={auth.login.url}>{auth.login.title}</Link>
+                    </Button>
+                    <Button asChild>
+                      <Link href={auth.signup.url}>{auth.signup.title}</Link>
+                    </Button>
+                    </>
+                }
+            {/* <Button onClick={()=>handleTosignOut()}>
+              signout
+            </Button>
             <Button asChild variant="outline" size="sm">
-              <a href={auth.login.url}>{auth.login.title}</a>
+              <Link href={auth.login.url}>{auth.login.title}</Link>
             </Button>
             <Button asChild size="sm">
-              <a href={auth.signup.url}>{auth.signup.title}</a>
+              <Link href={auth.signup.url}>{auth.signup.title}</Link>
             </Button>
+            
+            {session.data?.user&&<Button asChild size="sm">
+              <Link href={auth.provider.url}>{auth.provider.title}</Link>
+            </Button>} */}
+            
           </div>
         </nav>
 
@@ -160,12 +263,39 @@ const Navbar1 = ({
                   </Accordion>
 
                   <div className="flex flex-col gap-3">
-                    <Button asChild variant="outline">
-                      <a href={auth.login.url}>{auth.login.title}</a>
+                {
+                  session?
+                  <>
+                    <Button  onClick={()=>handleTosignOut()}>
+                      signout
+                    </Button>
+                    
+                  </>
+                  
+                  :<>
+                      <Button asChild variant="outline">
+
+                      <Link href={auth.login.url}>{auth.login.title}</Link>
                     </Button>
                     <Button asChild>
-                      <a href={auth.signup.url}>{auth.signup.title}</a>
+                      <Link href={auth.signup.url}>{auth.signup.title}</Link>
                     </Button>
+                    </>
+                }
+
+
+                   
+                    {/* <Button asChild variant="outline">
+
+                      <Link href={auth.login.url}>{auth.login.title}</Link>
+                    </Button>
+                    <Button asChild>
+                      <Link href={auth.signup.url}>{auth.signup.title}</Link>
+                    </Button>
+                    
+                    {session.data?.user&&<Button asChild size="sm">
+              <Link href={auth.provider.url}>{auth.provider.title}</Link>
+            </Button>} */}
                   </div>
                 </div>
               </SheetContent>
@@ -178,28 +308,15 @@ const Navbar1 = ({
 };
 
 const renderMenuItem = (item: MenuItem) => {
-  if (item.items) {
-    return (
-      <NavigationMenuItem key={item.title}>
-       
-        
-          {item.items.map((subItem) => (
-            <NavigationMenuLink asChild key={subItem.title} className="w-80">
-              <SubMenuLink item={subItem} />
-            </NavigationMenuLink>
-          ))}
-      
-      </NavigationMenuItem>
-    );
-  }
+  
 
   return (
     <NavigationMenuItem key={item.title}>
-      <NavigationMenuLink
-        href={item.url}
+      <NavigationMenuLink asChild
+       
         className="group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent-foreground"
       >
-        {item.title}
+      <Link  href={item.url}>{item.title}</Link>     
       </NavigationMenuLink>
     </NavigationMenuItem>
   );
@@ -247,4 +364,4 @@ const SubMenuLink = ({ item }: { item: MenuItem }) => {
   );
 };
 
-export { Navbar1 };
+export { Navbar };

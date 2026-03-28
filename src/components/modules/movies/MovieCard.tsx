@@ -43,7 +43,7 @@ export default function MovieCard({ movie }: { movie: IMovie }) {
           </div>
 
           {/* Rating */}
-          <div className="absolute top-3 right-3 bg-yellow-400 text-black px-2 py-1 text-xs font-bold rounded">
+          <div className="absolute top-3 right-3 bg-green-900 text-black px-2 py-1 text-xs font-bold rounded">
             ⭐ {movie.rating}
           </div>
 
