@@ -3,7 +3,9 @@
 import { motion } from "framer-motion"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Play } from "lucide-react"
+import { BadgeRussianRuble, Play } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 interface IMovie {
   id: string
@@ -74,7 +76,9 @@ export default function MovieCard({ movie }: { movie: IMovie }) {
               </Badge>
             ))}
           </div>
-
+            <Button className="w-full font-bold uppercase text-amber-950">
+              <Link href={`movies/movie/${movie.id}`}>view details</Link>
+            </Button>
         </div>
 
       </Card>

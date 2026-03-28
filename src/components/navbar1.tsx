@@ -32,6 +32,8 @@ import Link from "next/link";
 
 import { useEffect, useState } from "react";
 import { httpClient } from "@/lib/axios/httpClient";
+import { getUserInfo } from "@/service/auth.service";
+import { authClient } from "@/lib/auth-client";
 
 
 interface MenuItem {
@@ -115,19 +117,21 @@ const Navbar = ({
 
    useEffect(() => {
   const fetchData = async () => {
-    try {
-      const res = await fetch("http://localhost:5000/api/v1/auth/me", {
-        credentials: "include",
-      });
+    // try {
+    //   const res = await fetch("http://localhost:5000/api/v1/auth/me", {
+    //     credentials: "include",
+    //   });
 
-      const result = await res.json();
+    //   const result = await res.json();
 
-      if (res.ok) {
-        setSession(result); // or result.data depending API
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    //   if (res.ok) {
+    //     setSession(result); // or result.data depending API
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    // }
+    const res=await getUserInfo()
+    setSession(res)
   };
 
   fetchData();
@@ -163,6 +167,7 @@ const handleTosignOut = async () => {
       setLoading(false); // 🔥 VERY IMPORTANT
     }
 };
+
 
   return (
     <section className={cn("py-4", className)}>

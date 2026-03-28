@@ -10,10 +10,10 @@ const RegisterPage = async({ searchParams }: LoginParams) => {
   const redirectPath = params.redirect;
   return (
      <div
-      className="flex min-h-svh w-full items-center justify-center p-6 md:p-10 bg-cover bg-center"
-      style={{ backgroundImage: `url(${photo.src})` }}
+      className="flex min-h-svh w-full items-center justify-center  md:p-10 bg-cover bg-center"
+      style={{ backgroundImage: `url(${photo.src})`, objectFit: "cover" }}
     >
-      <div className="w-full max-w-sm bg-white/80 backdrop-blur-md p-6 rounded-xl shadow-lg">
+      <div className="w-full max-w-sm bg-white/80 backdrop-blur-md  rounded-xl shadow-lg">
         <SignupForm redirectPath={redirectPath} />
       </div>
     </div>
