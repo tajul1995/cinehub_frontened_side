@@ -14,7 +14,7 @@ export interface IMovie {
   movieName: string
 
   type: "featured" | "trending" | "popular" | "new" // extendable
-
+  price : number
   categories: string[]
 
   poster: string

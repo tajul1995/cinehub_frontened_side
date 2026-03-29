@@ -13,6 +13,7 @@ interface IMovie {
   poster: string
   rating: number
   duration: number
+  price: number
   publishedYear: number | null
   categories: string[]
 }
@@ -22,14 +23,15 @@ export default function MovieCard({ movie }: { movie: IMovie }) {
     <motion.div
       whileHover={{ scale: 1.05 }}
       transition={{ duration: 0.3 }}
-      className="w-[250px] flex-shrink-0"
+      className="w-[250px] flex-shrink-0 "
     >
+      
       <Card className="relative overflow-hidden rounded-2xl group cursor-pointer">
 
         {/* Poster */}
         <div className="relative h-[360px] w-full overflow-hidden">
           <img
-            src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${movie.poster}`}
+            src={movie.poster}
             alt={movie.movieName}
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
@@ -45,7 +47,7 @@ export default function MovieCard({ movie }: { movie: IMovie }) {
           </div>
 
           {/* Rating */}
-          <div className="absolute top-3 right-3 bg-green-900 text-black px-2 py-1 text-xs font-bold rounded">
+          <div className="absolute top-3 right-3 bg-green-900 text-white px-2 py-1 text-xl font-bold rounded">
             ⭐ {movie.rating}
           </div>
 
@@ -55,12 +57,12 @@ export default function MovieCard({ movie }: { movie: IMovie }) {
         <div className="p-4 space-y-2">
 
           {/* Title */}
-          <h2 className="font-semibold text-lg line-clamp-1">
+          <h2 className="font-semibold text-lg line-clamp-1 text-lime-600">
             {movie.movieName}
           </h2>
 
           {/* Meta */}
-          <div className="flex justify-between text-sm text-gray-400">
+          <div className="flex justify-between text-sm text-lime-300">
             <span>{movie.duration} min</span>
             <span>
                publishedYear: 
@@ -69,14 +71,18 @@ export default function MovieCard({ movie }: { movie: IMovie }) {
           </div>
 
           {/* Categories */}
-          <div className="flex flex-wrap gap-1 mt-2">
+          <div className="flex flex-wrap gap-1 mt-2 text-lime-300">
             {movie.categories.slice(0, 2).map((cat) => (
               <Badge key={cat} variant="secondary">
                 {cat}
               </Badge>
             ))}
+            
           </div>
-            <Button className="w-full font-bold uppercase text-amber-950">
+
+          {/* Price */}
+          <div className="text-lg font-bold text-amber-600">TK {movie.price}</div>
+            <Button className="w-full font-bold uppercase text-amber-950 bg-cyan-400">
               <Link href={`movies/movie/${movie.id}`}>view details</Link>
             </Button>
         </div>
