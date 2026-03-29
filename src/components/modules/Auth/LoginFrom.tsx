@@ -14,6 +14,7 @@ import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { Eye, EyeOff } from "lucide-react";
 import Link from "next/link";
+ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface LoginFormProps {
@@ -21,10 +22,12 @@ interface LoginFormProps {
 }
 
 const LoginForm = ({ redirectPath }: LoginFormProps) => {
+  
     // const queryClient = useQueryClient();
 
     const [serverError, setServerError] = useState<string | null>(null);
     const [showPassword, setShowPassword] = useState(false);
+    const router=useRouter()
 
     const { mutateAsync , isPending} = useMutation({
         mutationFn : (payload : ILoginPayload) => loginAction(payload, redirectPath),
@@ -45,12 +48,18 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
                     setServerError(result.message || "Login failed");
                     return ;
                 }
+                if(result.success){
+   router.refresh(); // update navbar
+   router.push("/"); // optional redirect
+}
+               
             } catch (error : any) {
                 console.log(`Login failed: ${error.message}`);
                 setServerError(`Login failed: ${error.message}`);
             }
         }
     })
+    
   return (
     <Card className="w-full max-w-md mx-auto shadow-md">
       <CardHeader className="text-center">
@@ -119,7 +128,7 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
 
           <div className="text-right mt-2">
             <Link
-              href="/forgot-password"
+              href="/forget-password"
               className="text-sm text-primary hover:underline underline-offset-4"
             >
               Forgot password?

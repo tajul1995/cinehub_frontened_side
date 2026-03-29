@@ -81,7 +81,7 @@ const Navbar = ({
     url: "https://www.shadcnblocks.com",
     src:"https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg",
     alt: "logo",
-    title: "FoodHuB.com",
+    title: "cinehub",
   },
   menu = [
     { title: "Home", url: "/" },
@@ -113,25 +113,26 @@ const Navbar = ({
   
 
   const [session, setSession] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
    useEffect(() => {
   const fetchData = async () => {
-    // try {
-    //   const res = await fetch("http://localhost:5000/api/v1/auth/me", {
-    //     credentials: "include",
-    //   });
+    try {
+      const res = await fetch("http://localhost:5000/api/v1/auth/me", {
+        credentials: "include",
+      });
 
-    //   const result = await res.json();
+      const result = await res.json();
+      console.log("navbar",result)
 
-    //   if (res.ok) {
-    //     setSession(result); // or result.data depending API
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    // }
-    const res=await getUserInfo()
-    setSession(res)
+      if (res.ok) {
+        setSession(result); // or result.data depending API
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    // const res=await getUserInfo()
+    // setSession(res)
   };
 
   fetchData();
@@ -163,9 +164,7 @@ const handleTosignOut = async () => {
    
   } catch (error) {
     console.error("Logout error:", error);
-  }finally {
-      setLoading(false); // 🔥 VERY IMPORTANT
-    }
+  }
 };
 
 
