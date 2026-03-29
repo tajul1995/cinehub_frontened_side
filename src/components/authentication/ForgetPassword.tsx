@@ -8,11 +8,13 @@ import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Input } from "@/components/ui/input";
 import { Mail } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const ForgotPasswordForm = () => {
   const [email, setEmail] = useState("");
   const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const router = useRouter();
 
   const { mutateAsync, isPending } = useMutation({
     mutationFn: async (email: string) => {
@@ -26,7 +28,7 @@ const ForgotPasswordForm = () => {
           body: JSON.stringify({ email }),
         }
       );
-console.log("forget",res)
+
       return res.json();
     },
   });
@@ -45,6 +47,9 @@ console.log("forget",res)
       }
 
       setSuccessMsg("Password reset link sent to your email 📩");
+       setTimeout(() => {
+      router.push(`/reset-password?email=${email}`);
+    }, 1000);
       setEmail("");
     } catch (err: any) {
       setErrorMsg(err.message || "Request failed");

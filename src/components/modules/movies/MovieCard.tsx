@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { BadgeRussianRuble, Play } from "lucide-react"
+import {  Play } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 

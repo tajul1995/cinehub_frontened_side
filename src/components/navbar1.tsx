@@ -91,8 +91,8 @@ const Navbar = ({
       url: "/movies",
     },
     {
-      title: "PAYMENT",
-      url: "/cart",
+      title: "selected movie",
+      url: "/selectedMovie",
     },{
       title: "DASHBOARD",
       url: "/dashboard",
