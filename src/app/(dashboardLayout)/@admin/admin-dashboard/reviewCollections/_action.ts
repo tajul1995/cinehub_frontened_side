@@ -29,3 +29,19 @@ export const deleteReview = async (id: string) => {
   const res = await httpClient.delete(`/review/${id}`);
   return res.data;
 };
+
+export const updateReviewStatus = async ({
+  id,
+  status,
+}: {
+  id: string;
+  status: "PENDING" | "APPROVED";
+}) => {
+  
+
+  const res = await httpClient.patch(`/review/${id}`, {
+    status,
+  });
+
+  return res.data;
+};
