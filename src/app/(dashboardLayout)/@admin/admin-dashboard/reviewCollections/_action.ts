@@ -24,3 +24,8 @@ export const getAllReviewsCollections = async () => {
     console.log(doctors, "payment server");
     return doctors;
 }
+export const deleteReview = async (id: string) => {
+//   const client = await serverHttpClient();
+  const res = await httpClient.delete(`/review/${id}`);
+  return res.data;
+};

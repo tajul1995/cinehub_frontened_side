@@ -1,31 +1,31 @@
 "use client";
 
-import { getAllReviewsCollections } from "@/app/(dashboardLayout)/@admin/admin-dashboard/reviewCollections/_action";
-import { useQuery } from "@tanstack/react-query";
-
-export type ICommentsCollection ={
-  id: string;
-  comment: string;
-  status: string;
-  movie: {
-    movieName: string;
-    
-  };
-  user:{
-    name:string;
-  }
-};
-// type ApiResponse = {
-//   success: boolean;
-//   message: string;
-//   data: Review[];
-// };
+import { getAllReviewsCollections, deleteReview } from "@/app/(dashboardLayout)/@admin/admin-dashboard/reviewCollections/_action";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export default function ReviewsTable() {
-    const { data  } = useQuery({
-       queryKey: ["AllReviewsCollections"],
-       queryFn: () => getAllReviewsCollections(),
-     });
+  const queryClient = useQueryClient();
+
+  const { data } = useQuery({
+    queryKey: ["AllReviewsCollections"],
+    queryFn: () => getAllReviewsCollections(),
+  });
+
+  // 🔥 delete mutation
+  const { mutate, isPending } = useMutation({
+    mutationFn: deleteReview,
+    onSuccess: () => {
+      // 🔄 refetch after delete
+      queryClient.invalidateQueries({ queryKey: ["AllReviewsCollections"] });
+    },
+  });
+
+  const handleDelete = (id: string) => {
+    const confirmDelete = confirm("Are you sure to delete?");
+    if (!confirmDelete) return;
+
+    mutate(id);
+  };
 
   return (
     <div className="max-w-6xl mx-auto mt-10 overflow-x-auto">
@@ -35,9 +35,10 @@ export default function ReviewsTable() {
         <thead className="bg-amber-400 text-black font-bold text-left">
           <tr>
             <th className="p-3">🎬 Movie</th>
-            <th className="p-3">💰 user Name</th>
-            <th className="p-3">📌 status</th>
-            <th className="p-3">💳 comment</th>
+            <th className="p-3">👤 User</th>
+            <th className="p-3">📌 Status</th>
+            <th className="p-3">💬 Comment</th>
+            <th className="p-3 text-center">⚙️ Action</th>
           </tr>
         </thead>
 
@@ -46,49 +47,34 @@ export default function ReviewsTable() {
           {data?.data?.map((item) => (
             <tr key={item.id} className="border-t ">
 
-              {/* Movie Name */}
               <td className="p-3 font-semibold">
                 {item.movie?.movieName}
               </td>
 
-              {/* Price */}
               <td className="p-3 text-green-600 font-bold">
                 {item.user?.name}
               </td>
-              {/* <td className="p-3 text-green-600 font-bold">
-                ${item.user?.name}
-              </td> */}
 
-              {/* Booking Status */}
               <td className="p-3">
-                <span
-                  className={`px-2 py-1 rounded text-xs font-semibold ${
-                    item.status === "COMPLETED"
-                      ? "bg-green-100 text-green-600"
-                      : item.status === "SCHEDULED"
-                      ? "bg-blue-100 text-blue-600"
-                      : "bg-gray-100 text-gray-600"
-                  }`}
-                >
+                <span className="px-2 py-1 rounded text-xs font-semibold bg-gray-100 text-gray-600">
                   {item.status}
                 </span>
               </td>
 
-              {/* Payment Status */}
-                <td className="p-3">
-                {/* <span
-                  className={`px-2 py-1 rounded text-xs font-semibold ${
-                    item.booking?.paymentStatus === "PAID"
-                      ? "bg-green-100 text-green-600"
-                      : item.booking?.paymentStatus === "UNPAID"
-                      ? "bg-red-100 text-red-600"
-                      : "bg-yellow-100 text-yellow-600"
-                  }`}
+              <td className="p-3">
+                {item.comment || "No comment"}
+              </td>
+
+              {/* 🔥 DELETE BUTTON */}
+              <td className="p-3 text-center">
+                <button
+                  onClick={() => handleDelete(item.id)}
+                  disabled={isPending}
+                  className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition"
                 >
-                  {item.booking?.paymentStatus}
-                </span> */}
-                   {item.comment?item.comment:"No comment"}
-              </td>  
+                  {isPending ? "Deleting..." : "Delete"}
+                </button>
+              </td>
 
             </tr>
           ))}
