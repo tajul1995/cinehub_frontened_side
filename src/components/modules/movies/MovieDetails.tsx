@@ -4,8 +4,11 @@ import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Star, Clock, Calendar, PlayCircle } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+import PaymentForm from "./PaymentForm";
 
-type Movie = {
+ export type Movie = {
   id: string;
   movieName: string;
   categories: string[];
@@ -22,9 +25,74 @@ type Movie = {
 };
 
 const MovieDetailsCard = ({ movie }: { movie: Movie }) => {
+  const [open, setOpen] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  const [bookingId, setBookingId] = useState<string | undefined>(undefined);
+
+  const handleBooked = async (movieId: string) => {
+  console.log("Clicked:", movieId);
+
+  try {
+    const res = await fetch("http://localhost:5000/api/v1/booking", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ movieId }),
+    });
+
+    console.log("Response:", res);
+
+    const data = await res.json();
+    console.log("Data:", data);
+    if(data.success){
+      alert("Movie booked successfully!");
+      setOpen(true);
+    }
+    setBookingId(data?.data?.appointment?.id);
+  } catch (error) {
+    console.error("Fetch error:", error);
+  }
+};
+
+  
+// Object
+// data
+// : 
+// appointment
+// : 
+// {id: 'f23b1624-0c06-4ad7-9217-1a4e8c679389', status: 'SCHEDULED', paymentStatus: 'UNPAID', createdAt: '2026-03-30T06:22:28.497Z', updatedAt: '2026-03-30T06:22:28.497Z', …}
+// payment
+// : 
+// {id: '80434072-3f0f-43a6-b266-6d992b56f68b', amount: 900, transactionId: '019d3d68-7296-7745-ab16-f23809f94443', invoiceUrl: null, stripeEventId: null, …}
+// paymentUrl
+// : 
+// "https://checkout.stripe.com/c/pay/cs_test_a1evHLcqGtcwYhWrt5vafwIjYEwjMnijlnpfrUx1szZiW1MznhyN1CkxaL#fidnandhYHdWcXxpYCc%2FJ2FgY2RwaXEnKSdkdWxOYHwnPyd1blpxYHZxWjA0S0xnQlxJVURvU3N%2Fdz1GN1RKNmhdYlZpfWJzTzU1bTxqNH99VEliPGxAMjJ1MDBkX2wwRnxuU1ZIbHJVdDZsUjRJcUtAYTFhR11sVXZnRnxzZzdMPVw9NTVtX0w2UkdQSScpJ2N3amhWYHdzYHcnP3F3cGApJ2dkZm5id2pwa2FGamlqdyc%2FJyZjY2NjY2MnKSdpZHxqcHFRfHVgJz8ndmxrYmlgWmxxYGgnKSdga2RnaWBVaWRmYG1qaWFgd3YnP3F3cGB4JSUl"
+// [[Prototype]]
+// : 
+// Object
+// message
+// : 
+// "Booking created successfully"
+// success
+// : 
+// true
+// [[Prototype]]
+// : 
+// Object
+//   if (!movie) {
+//   return (
+//     <div className="flex justify-center items-center ">
+//       <p>Loading movie...</p>
+//     </div>
+//   );
+// }
+// const id=movie.id
   return (
     <div className="flex justify-center px-4 py-10">
-      <Card className="max-w-5xl w-full rounded-2xl shadow-xl overflow-hidden grid md:grid-cols-2">
+      {
+        !open&&<Card className="max-w-5xl w-full rounded-2xl shadow-xl overflow-hidden grid md:grid-cols-2">
         
         {/* 🎥 Poster */}
         <div className="relative h-[400px] md:h-full">
@@ -120,15 +188,19 @@ const MovieDetailsCard = ({ movie }: { movie: Movie }) => {
             </div>
 
             {/* Payment Button */}
-            {movie.price > 0 && (
-              <Button className="w-full bg-green-600 hover:bg-green-700">
-                💳 Buy / Rent Movie
+             
+              <Button onClick={()=>handleBooked(movie.id)}   className="w-full bg-green-600 hover:bg-green-700">
+                💳 booked Movie
               </Button>
-            )}
+            
           </div>
 
         </CardContent>
       </Card>
+      }
+      {
+        open&&<PaymentForm movie={movie} bookingId={bookingId}></PaymentForm>
+      }
     </div>
   );
 };

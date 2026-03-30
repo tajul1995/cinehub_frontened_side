@@ -1,11 +1,8 @@
-import React from 'react'
+import { redirect } from 'next/navigation'
+
 
 const DashboardPage = () => {
-  return (
-    <div>
-      <h2>Dashboard</h2>
-    </div>
-  )
+  return redirect('/dashboard/userProfile')
 }
 
 export default DashboardPage

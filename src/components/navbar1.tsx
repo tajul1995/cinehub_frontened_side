@@ -31,9 +31,8 @@ import Link from "next/link";
 //  import { authClient } from "@/lib/auth-client";
 
 import { useEffect, useState } from "react";
-import { httpClient } from "@/lib/axios/httpClient";
 import { getUserInfo } from "@/service/auth.service";
-import { authClient } from "@/lib/auth-client";
+
 
 
 interface MenuItem {
@@ -91,8 +90,8 @@ const Navbar = ({
       url: "/movies",
     },
     {
-      title: "selected movie",
-      url: "/selectedMovie",
+      title: "payment",
+      url: "/payment",
     },{
       title: "DASHBOARD",
       url: "/dashboard",
@@ -117,20 +116,23 @@ const Navbar = ({
 
    useEffect(() => {
   const fetchData = async () => {
-    try {
-      const res = await fetch("http://localhost:5000/api/v1/auth/me", {
-        credentials: "include",
-      });
+    const res = await getUserInfo()
+    setSession(res)
+    console.log(res)
+    // try {
+    //   const res = await fetch("http://localhost:5000/api/v1/auth/me", {
+    //     credentials: "include",
+    //   });
 
-      const result = await res.json();
-      console.log("navbar",result)
+    //   const result = await res.json();
+    //   console.log("navbar",result)
 
-      if (res.ok) {
-        setSession(result); // or result.data depending API
-      }
-    } catch (error) {
-      console.error(error);
-    }
+    //   if (result.ok) {
+    //     setSession(result); // or result.data depending API
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    // }
     // const res=await getUserInfo()
     // setSession(res)
   };
@@ -195,7 +197,7 @@ const handleTosignOut = async () => {
           </div>
           <div className="flex gap-2">
             {
-              session? 
+              session?
                   <>
                     <Button  onClick={()=>handleTosignOut()}>
                       signout

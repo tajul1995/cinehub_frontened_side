@@ -11,56 +11,43 @@ import { ILoginResponse } from "@/types/auth.types";
 // import { ApiErrorResponse } from "@/types/api.types";
 // import { ILoginResponse } from "@/types/auth.types";
 import { ILoginPayload, loginZodSchema } from "@/zod/auth.validation";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 
-export const loginAction = async (payload : ILoginPayload, redirectPath ?: string ) : Promise<ILoginResponse | ApiErrorResponse> =>{
-    const parsedPayload = loginZodSchema.safeParse(payload);
+export const loginAction = async (
+  payload: ILoginPayload,
+  redirectPath?: string
+): Promise<ILoginResponse | ApiErrorResponse> => {
+  const parsedPayload = loginZodSchema.safeParse(payload);
 
-    if(!parsedPayload.success){
-        const firstError = parsedPayload.error.issues[0].message || "Invalid input";
-        return {
-            success: false,
-            message: firstError,
-        }
-    }
-    try {
+  if (!parsedPayload.success) {
+    return {
+      success: false,
+      message: parsedPayload.error.issues[0].message,
+    };
+  }
 
-        const response = await httpClient.post<ILoginResponse>("/auth/login", parsedPayload.data);
+  try {
+    const response = await httpClient.post<ILoginResponse>(
+      "/auth/login",
+      parsedPayload.data
+    );
 
-        const { accessToken, refreshToken, token} = response.data;
-        // const {role,  email} = user;
-        await setTokenInCookies("accessToken", accessToken);
-        await setTokenInCookies("refreshToken", refreshToken);
-        await setTokenInCookies("better-auth.session_token", token, 24 * 60 * 60); // 1 day in seconds
+    const { accessToken, refreshToken, token } = response.data;
 
-        // if(!emailVerified){
-        //     redirect("/verify-email");
-        // }else // in the catch block
-            
-        // if(needPasswordChange){
-        //     //TODO : refactoring
-        //     redirect(`/reset-password?email=${email}`);
-        // }else{
-        //     // redirect(redirectPath || "/dashboard");
-        //     const targetPath = redirectPath && isValidRedirectForRole(redirectPath, role as UserRole) ? redirectPath : getDefaultDashboardRoute(role as UserRole);
+    await setTokenInCookies("accessToken", accessToken);
+    await setTokenInCookies("refreshToken", refreshToken);
+    await setTokenInCookies("better-auth.session_token", token, 86400);
 
-            
-        //     redirect(targetPath);
-            // }
-            redirect(redirectPath || "/");
-}
-     catch (error : any) {
-        console.log(error, "error");
-        if(error && typeof error === "object" && "digest" in error && typeof error.digest === "string" && error.digest.startsWith("NEXT_REDIRECT")){
-            throw error;
-        }
+    // ❌ REMOVE redirect from here
 
-        if (error && error.response && error.response.data.message === "Email not verified") {
-            redirect(`/verify-email?email=${payload.email}`);
-        }
-        return {
-            success: false,
-            message: `Login failed: ${error.message}`,
-        }
-    }
-}
+    return {
+      success: true,
+      message: "Login successful",
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error?.response?.data?.message || "Login failed",
+    };
+  }
+};

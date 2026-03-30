@@ -7,7 +7,7 @@ import {  Play } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
-interface IMovie {
+export interface IMovie {
   id: string
   movieName: string
   poster: string
