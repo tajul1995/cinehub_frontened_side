@@ -1,11 +1,19 @@
-import React from 'react'
 
-const UserProfilePage = () => {
+
+import ProfileCard from "@/components/dashboardCollection/userProfile";
+import { getUserInfo } from "@/service/auth.service";
+
+const UserProfilePage = async () => {
+ 
+  const res = await getUserInfo()
+      
+      console.log(res,"res from user profile page")
+
   return (
     <div>
-      <h2>User Profile</h2>
+       <ProfileCard user={res} /> 
     </div>
-  )
-}
+  );
+};
 
-export default UserProfilePage
+export default UserProfilePage;
