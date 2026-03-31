@@ -86,14 +86,14 @@ const Navbar = ({
     { title: "Home", url: "/" },
     
     {
-      title: "movies",
+      title: "Movies",
       url: "/movies",
     },
     {
-      title: "selected movies",
+      title: "Booked Movies",
       url: "/selectedMovie",
     },{
-      title: "DASHBOARD",
+      title: "Dashboard",
       url: "/dashboard",
     }
     // {

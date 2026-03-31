@@ -15,7 +15,7 @@ const AllMovies = () => {
 
     //  console.log(data);
   return (
-    <div className="grid grid-cols-4 gap-3 max-w-7xl mx-auto mt-4">
+    <div className="grid grid-cols-4 md:grid-cols-4 sm:grid-cols-1 md-gap-2 sm-gap-1 gap-3 lg:max-w-7xl lg:mx-auto mt-4 md:mt-2">
       {
         data?.data?.map((movie: IMovie) => <MovieCard key={movie.id} movie={movie}></MovieCard>)
       }
