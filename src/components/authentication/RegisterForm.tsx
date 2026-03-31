@@ -11,7 +11,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { IRegisterPayload, registerZodSchema } from "@/zod/auth.validation";
-// import { ILoginPayload, loginZodSchema } from "@/zod/auth.validation";
+
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { Eye, EyeOff } from "lucide-react";
@@ -23,7 +23,7 @@ interface LoginFormProps {
 }
 
 const SignupForm = ({ redirectPath }: LoginFormProps) => {
-    // const queryClient = useQueryClient();
+  
 
     const [serverError, setServerError] = useState<string | null>(null);
     const [showPassword, setShowPassword] = useState(false);

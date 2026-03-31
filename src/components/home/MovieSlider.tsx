@@ -28,7 +28,7 @@ export default function MovieSlider() {
     setMovies(generateMovies(12));
   }, []);
 
-  // ✅ Responsive scroll based on container width
+
   const scroll = (direction: "left" | "right") => {
     if (!sliderRef.current) return;
 
@@ -40,7 +40,7 @@ export default function MovieSlider() {
     });
   };
 
-  // ✅ Auto slide (responsive)
+ 
   useEffect(() => {
     const interval = setInterval(() => {
       if (!sliderRef.current) return;
@@ -61,7 +61,7 @@ export default function MovieSlider() {
       </h2>
 
       <div className="relative">
-        {/* ⬅️ Left */}
+      
         <button
           onClick={() => scroll("left")}
           className="hidden sm:flex absolute left-1 top-1/2 -translate-y-1/2 z-20 bg-black/70 hover:bg-amber-700 text-white p-2 sm:p-3 rounded-full"
@@ -69,7 +69,7 @@ export default function MovieSlider() {
           <ChevronLeft size={20} />
         </button>
 
-        {/* ➡️ Right */}
+      
         <button
           onClick={() => scroll("right")}
           className="hidden sm:flex absolute right-1 top-1/2 -translate-y-1/2 z-20 bg-black/70 hover:bg-amber-700 text-white p-2 sm:p-3 rounded-full"
@@ -77,7 +77,7 @@ export default function MovieSlider() {
           <ChevronRight size={20} />
         </button>
 
-        {/* 🎞️ Slider */}
+      
         <div
           ref={sliderRef}
           className="flex gap-4 sm:gap-6 overflow-x-auto scroll-smooth no-scrollbar"

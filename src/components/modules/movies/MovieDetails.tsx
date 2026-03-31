@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import Image from "next/image";
@@ -170,7 +171,7 @@ const MovieDetailsCard = ({ movie }: { movie: Movie }) => {
             </p>
           </div>
 
-          {/* 💳 Payment Section */}
+          
           <div className="pt-4 border-t space-y-3">
             <div className="flex justify-between items-center">
               <span className="text-lg font-semibold">

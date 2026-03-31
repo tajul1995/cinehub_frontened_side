@@ -43,7 +43,7 @@ export default function CreateMovieForm() {
     if (["price", "rating", "duration", "publishedYear"].includes(name)) {
       val = Number(value);
 
-      // 🔥 Validation rules
+      
       if (name === "price" && val < 0) val = 0; // no negative price
       if (name === "rating") {
         if (val < 1) val = 1;

@@ -20,7 +20,7 @@ export default function ReviewsTable() {
     queryFn: () => getAllReviewsCollections(),
   });
 
-  // ✅ delete
+
   const { mutate: deleteMutate, isPending: deleting } = useMutation({
     mutationFn: deleteReview,
     onSuccess: () => {
@@ -28,7 +28,7 @@ export default function ReviewsTable() {
     },
   });
 
-  // ✅ update status
+  
   const { mutate: statusMutate } = useMutation({
     mutationFn: updateReviewStatus,
     onSuccess: () => {
@@ -78,7 +78,7 @@ export default function ReviewsTable() {
                 {item.user?.name}
               </td>
 
-              {/* 🔥 STATUS DROPDOWN */}
+              
               <td className="p-3">
                 <select
                   value={item.status}

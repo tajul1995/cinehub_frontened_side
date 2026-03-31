@@ -12,9 +12,9 @@ const SelectedMovies = () => {
      });
      console.log(data?.data?.bookings,"selected movies client")
   return (
-    <div className="max-w-7xl mx-auto mt-3">
+    <div className="lg:max-w-7xl lg:mx-auto mt-3">
      
-      <div className="grid grid-cols-4 md:grid-cols-3 sm:grid-cols-1 md:gap-3 sm:gap-1 mt-3 ">
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1  gap-2 ">
         {
         data?.data?.bookings?.map((booking: any) => (
           <div key={booking.id}>

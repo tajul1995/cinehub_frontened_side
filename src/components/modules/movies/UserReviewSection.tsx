@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 
-// ✅ Types
+
 type Booking = {
   id: string;
   movieId: string;
@@ -23,7 +23,7 @@ export default function ReviewSection({ movie }: { movie: Movie }) {
   const booking = movie?.bookings?.[0];
 
   const handleSubmitReview = async () => {
-    // ✅ Validation
+  
     if (!booking) {
       return alert("❌ You must book this movie before reviewing.");
     }
@@ -59,7 +59,7 @@ export default function ReviewSection({ movie }: { movie: Movie }) {
         throw new Error(data.message || "Failed to submit review");
       }
 
-      // ✅ Success
+      
       alert("✅ Review submitted successfully!");
       setComment("");
       setRating(5);
@@ -92,7 +92,7 @@ export default function ReviewSection({ movie }: { movie: Movie }) {
         />
       </div>
 
-      {/* 📝 Comment */}
+     
       <div className="mb-4">
         <label className="block text-sm font-medium mb-1 text-gray-700">
           Comment
@@ -106,7 +106,7 @@ export default function ReviewSection({ movie }: { movie: Movie }) {
         />
       </div>
 
-      {/* 🚀 Submit */}
+     
       <button
         onClick={handleSubmitReview}
         disabled={loading || !booking}
@@ -115,7 +115,7 @@ export default function ReviewSection({ movie }: { movie: Movie }) {
         {loading ? "Submitting..." : "Submit Review"}
       </button>
 
-      {/* ⚠️ No booking warning */}
+     
       {!booking && (
         <p className="text-sm text-red-500 mt-3">
           ⚠️ You must book this movie before submitting a review.

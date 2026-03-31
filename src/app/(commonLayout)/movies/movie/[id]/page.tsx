@@ -1,6 +1,6 @@
 // import MovieDetailsCard from '@/components/modules/movies/MovieDetails';
 import MovieDetailsCard from '@/components/modules/movies/MovieDetails';
-import React from 'react'
+
 
 const SingleMoviePage = async({
   params

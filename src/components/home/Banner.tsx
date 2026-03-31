@@ -47,7 +47,7 @@ export default function BannerCarousel() {
     onSelect()
   }, [emblaApi])
 
-  // Auto slide
+ 
   React.useEffect(() => {
     if (!emblaApi) return
 

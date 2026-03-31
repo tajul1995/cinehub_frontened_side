@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client"
 import { loginAction } from "@/app/(commonLayout)/(authRouteGroup)/login/_action";
 import AppField from "@/components/shared/form/AppField";
@@ -9,6 +10,7 @@ import AppSubmitButton from "@/components/shared/form/AppSubmitButton";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { authClient } from "@/lib/auth-client";
 import { ILoginPayload, loginZodSchema } from "@/zod/auth.validation";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
@@ -28,6 +30,8 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
     const [serverError, setServerError] = useState<string | null>(null);
     const [showPassword, setShowPassword] = useState(false);
     const router=useRouter()
+  
+
 
     const { mutateAsync , isPending} = useMutation({
         mutationFn : (payload : ILoginPayload) => loginAction(payload, redirectPath),
@@ -49,8 +53,8 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
                     return ;
                 }
                 if(result.success){
-   router.refresh(); // update navbar
-   router.push("/"); // optional redirect
+   router.refresh(); 
+   router.push("/"); 
 }
                
             } catch (error : any) {
@@ -164,8 +168,8 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
         </div>
 
         <Button variant="outline" className="w-full" onClick={() => {
-            const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-            //TODO redirect path after login in frontend
+           const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+           
             window.location.href = `${baseUrl}/auth/login/google`;
         }}>
           <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">

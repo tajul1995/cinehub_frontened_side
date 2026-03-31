@@ -4,11 +4,11 @@ import { getMyDetails } from "@/app/(commonLayout)/selectedMovie/_action";
 import { Badge } from "@/components/ui/badge";
 import { useQuery } from "@tanstack/react-query";
 
-type User = {
-  name: string;
-  email: string;
-  role: string;
-};
+// type User = {
+//   name: string;
+//   email: string;
+//   role: string;
+// };
 
 export default function AdminProfileCard() {
   const { data  } = useQuery({
@@ -21,7 +21,7 @@ export default function AdminProfileCard() {
     <div className="max-w-lg mx-auto mt-10 p-6 bg-yellow-400 text-amber-950 shadow-xl rounded-2xl text-center space-y-4">
       <h2 className="text-2xl font-bold mb-4"> YOUR PROFILE</h2>
 
-      {/* Avatar (first letter) */}
+      
       <div className="w-20 h-20 mx-auto rounded-full bg-blue-500 flex items-center justify-center text-white text-2xl font-bold">
         {user?.name?.charAt(0).toUpperCase()}
       </div>

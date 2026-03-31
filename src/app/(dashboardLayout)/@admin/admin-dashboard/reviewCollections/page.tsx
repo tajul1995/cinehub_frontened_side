@@ -1,5 +1,5 @@
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
-import React from 'react'
+
 import { getAllReviewsCollections } from './_action';
  import ReviewsTable from '@/components/modules/movies/AllReviews';
 

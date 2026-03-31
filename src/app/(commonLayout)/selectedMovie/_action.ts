@@ -53,7 +53,7 @@ export interface IUser {
   bookings: IBooking[];
 }
 
-// API Response
+
 export interface IUserResponse {
   success: boolean;
   message: string;

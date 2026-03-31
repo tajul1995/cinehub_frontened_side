@@ -57,7 +57,7 @@ const ResetPasswordForm = () => {
     setSuccessMsg(null);
 
     try {
-      // ✅ 1. Reset password
+      
       const result = await mutateAsync({
         email,
         otp,
@@ -69,7 +69,7 @@ const ResetPasswordForm = () => {
         return;
       }
 
-      // ✅ 2. Refresh token API
+      
       const refreshRes = await fetch(
         "http://localhost:5000/api/v1/auth/token-refresh",
         {
@@ -85,14 +85,14 @@ const ResetPasswordForm = () => {
         return;
       }
 
-      // ✅ 3. Save access token (if returned)
+      
       if (refreshData.data?.accessToken) {
         localStorage.setItem("accessToken", refreshData.data.accessToken);
       }
 
       setSuccessMsg("Password reset & logged in successfully ✅");
 
-      // ✅ 4. Redirect
+      
       setTimeout(() => {
         router.push("/login");
       }, 1000);
@@ -115,13 +115,13 @@ const ResetPasswordForm = () => {
 
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Email */}
+           
             <div className="relative">
               <Mail className="absolute left-3 top-3 size-4 text-gray-400" />
               <Input value={email} readOnly className="pl-9 bg-gray-100" />
             </div>
 
-            {/* OTP */}
+           
             <div className="relative">
               <KeyRound className="absolute left-3 top-3 size-4 text-gray-400" />
               <Input
@@ -133,7 +133,7 @@ const ResetPasswordForm = () => {
               />
             </div>
 
-            {/* New Password */}
+           
             <div className="relative">
               <Lock className="absolute left-3 top-3 size-4 text-gray-400" />
               <Input
@@ -146,21 +146,20 @@ const ResetPasswordForm = () => {
               />
             </div>
 
-            {/* Error */}
+            
             {errorMsg && (
               <Alert variant="destructive">
                 <AlertDescription>{errorMsg}</AlertDescription>
               </Alert>
             )}
 
-            {/* Success */}
             {successMsg && (
               <Alert>
                 <AlertDescription>{successMsg}</AlertDescription>
               </Alert>
             )}
 
-            {/* Button */}
+           
             <Button className="w-full" disabled={isPending}>
               {isPending ? "Processing..." : "Reset Password"}
             </Button>

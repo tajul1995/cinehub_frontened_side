@@ -7,10 +7,12 @@ type Review = {
   comment: string;
   status: "APPROVED" | "PENDING";
 };
+
 type Booking = {
   id: string;
   movieId: string;
 };
+
 type Movie = {
   id: string;
   movieName: string;
@@ -20,62 +22,85 @@ type Movie = {
   publishedYear: number;
   poster: string;
   reviews: Review[];
-    bookings: Booking[];
+  bookings: Booking[];
 };
 
 export default function SelectedMovieCard({ movie }: { movie: Movie }) {
-     console.log(movie,"selected movie card")
   const approvedReviews = movie.reviews.filter(
     (r) => r.status === "APPROVED"
   );
 
   return (
-    <div className="max-w-md  rounded-2xl shadow-lg overflow-hidden bg-amber-950">
+    <div className="w-full max-w-6xl mx-auto bg-amber-950 rounded-2xl shadow-lg overflow-hidden">
       
-      {/* Poster */}
-      <img src={movie.poster} className="w-full h-56 object-cover" />
-
-      <div className="p-4 space-y-3">
+      {/* 🔥 Responsive Layout */}
+      <div className="flex flex-col md:flex-row">
         
-        {/* Title */}
-        <h2 className="text-xl font-bold">{movie.movieName}</h2>
-
-        {/* Type + Rating */}
-        <div className="flex justify-between text-sm text-amber-600">
-          <span>🎬 {movie.type}</span>
-          <span>⭐ {movie.rating}</span>
+        {/* 🎬 Poster */}
+        <div className="w-full md:w-1/2">
+          <img
+            src={movie.poster}
+            className="w-full h-[250px] sm:h-[300px] md:h-full object-cover"
+          />
         </div>
 
-        {/* Categories */}
-        <div className="flex flex-wrap gap-2">
-          {movie.categories.map((cat, i) => (
-            <span key={i} className="bg-amber-300 text-black font-bold px-2 py-1 rounded text-xs">
-              {cat}
-            </span>
-          ))}
-        </div>
+        {/* 📄 Content */}
+        <div className="w-full md:w-1/2 p-4 sm:p-6 space-y-4">
+          
+          {/* Title */}
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
+            {movie.movieName}
+          </h2>
 
-        {/* Year */}
-        <p className="text-sm text-gray-600">
-          📅 {movie.publishedYear}
-        </p>
+          {/* Type + Rating */}
+          <div className="flex justify-between text-sm sm:text-base text-amber-400">
+            <span>🎬 {movie.type}</span>
+            <span>⭐ {movie.rating}</span>
+          </div>
 
-        {/* Reviews */}
-        <div className="space-y-2">
-          <h3 className="font-semibold">💬 Reviews</h3>
+          {/* Categories */}
+          <div className="flex flex-wrap gap-2">
+            {movie.categories.map((cat, i) => (
+              <span
+                key={i}
+                className="bg-amber-300 text-black font-bold px-2 py-1 rounded text-xs sm:text-sm"
+              >
+                {cat}
+              </span>
+            ))}
+          </div>
 
-          {approvedReviews.length === 0 ? (
-            <p className="text-sm text-gray-400">No approved reviews</p>
-          ) : (
-            approvedReviews.map((review) => (
-              <div key={review.id} className="bg-amber-300 text-black font-bold p-2 rounded">
-                <p className="text-sm">{review.comment}</p>
-              </div>
-            ))
-          )}
+          {/* Year */}
+          <p className="text-xs sm:text-sm text-gray-300">
+            📅 {movie.publishedYear}
+          </p>
+
+          {/* Reviews */}
+          <div className="space-y-2">
+            <h3 className="font-semibold text-white">💬 Reviews</h3>
+
+            {approvedReviews.length === 0 ? (
+              <p className="text-sm text-gray-400">No approved reviews</p>
+            ) : (
+              approvedReviews.slice(0, 3).map((review) => (
+                <div
+                  key={review.id}
+                  className="bg-amber-300 text-black font-bold p-2 rounded"
+                >
+                  <p className="text-xs sm:text-sm">
+                    {review.comment}
+                  </p>
+                </div>
+              ))
+            )}
+          </div>
         </div>
       </div>
-      <ReviewSection movie={movie} />
+
+    
+      <div className="p-4 sm:p-6">
+        <ReviewSection movie={movie} />
+      </div>
     </div>
   );
 }
