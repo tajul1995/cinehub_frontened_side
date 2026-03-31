@@ -1,12 +1,18 @@
 "use client";
 
+import ReviewSection from "./UserReviewSection";
+
 type Review = {
   id: string;
   comment: string;
   status: "APPROVED" | "PENDING";
 };
-
+type Booking = {
+  id: string;
+  movieId: string;
+};
 type Movie = {
+  id: string;
   movieName: string;
   type: string;
   categories: string[];
@@ -14,9 +20,11 @@ type Movie = {
   publishedYear: number;
   poster: string;
   reviews: Review[];
+    bookings: Booking[];
 };
 
 export default function SelectedMovieCard({ movie }: { movie: Movie }) {
+     console.log(movie,"selected movie card")
   const approvedReviews = movie.reviews.filter(
     (r) => r.status === "APPROVED"
   );
@@ -67,6 +75,7 @@ export default function SelectedMovieCard({ movie }: { movie: Movie }) {
           )}
         </div>
       </div>
+      <ReviewSection movie={movie} />
     </div>
   );
 }
