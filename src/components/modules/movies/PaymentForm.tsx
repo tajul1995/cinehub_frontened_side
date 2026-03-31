@@ -7,15 +7,18 @@ import Image from "next/image";
 import { Movie } from "./MovieDetails";
 
 type Props = {
-  movie: Movie;
-  bookingId?: string ;
+  movie: Movie,
+  bookingId: string,
+
+
+ 
 };
 
-export default function PaymentForm({ movie, bookingId }: Props) {
+export default function PaymentForm({ movie, bookingId }: { movie: Movie; bookingId: string }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
+// console.log(bookingId,"payment from")
   const handlePayment = async () => {
     try {
       setLoading(true);
@@ -45,6 +48,13 @@ export default function PaymentForm({ movie, bookingId }: Props) {
       // If backend returns payment URL (Stripe etc.)
       if (data?.data.paymentUrl) {
         window.location.href = data?.data?.paymentUrl;
+        await fetch(`http://localhost:5000/api/v1/payment/${bookingId}`, {
+          method: "patch",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
       }
 
     } catch (err: any) {

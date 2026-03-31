@@ -90,8 +90,8 @@ const Navbar = ({
       url: "/movies",
     },
     {
-      title: "payment",
-      url: "/payment",
+      title: "selected movies",
+      url: "/selectedMovie",
     },{
       title: "DASHBOARD",
       url: "/dashboard",

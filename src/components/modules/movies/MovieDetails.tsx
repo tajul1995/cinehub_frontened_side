@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Star, Clock, Calendar, PlayCircle } from "lucide-react";
-import Link from "next/link";
+
 import { useState } from "react";
 import PaymentForm from "./PaymentForm";
 
@@ -22,11 +22,15 @@ import PaymentForm from "./PaymentForm";
   cast: { name: string; role: string }[];
   directors: { name: string }[];
   producers: { name: string }[];
+  bookings: {
+    id: string;
+    
+  };
 };
 
 const MovieDetailsCard = ({ movie }: { movie: Movie }) => {
   const [open, setOpen] = useState(false);
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [bookingId, setBookingId] = useState<string | undefined>(undefined);
 
   const handleBooked = async (movieId: string) => {
@@ -42,7 +46,7 @@ const MovieDetailsCard = ({ movie }: { movie: Movie }) => {
       body: JSON.stringify({ movieId }),
     });
 
-    console.log("Response:", res);
+    // console.log("Response form movie details:", res);
 
     const data = await res.json();
     console.log("Data:", data);
@@ -50,7 +54,7 @@ const MovieDetailsCard = ({ movie }: { movie: Movie }) => {
       alert("Movie booked successfully!");
       setOpen(true);
     }
-    setBookingId(data?.data?.appointment?.id);
+     setBookingId(data?.data?.booking?.id);
   } catch (error) {
     console.error("Fetch error:", error);
   }
@@ -199,7 +203,7 @@ const MovieDetailsCard = ({ movie }: { movie: Movie }) => {
       </Card>
       }
       {
-        open&&<PaymentForm movie={movie} bookingId={bookingId}></PaymentForm>
+        open&&bookingId&&<PaymentForm movie={movie} bookingId={bookingId}  ></PaymentForm>
       }
     </div>
   );

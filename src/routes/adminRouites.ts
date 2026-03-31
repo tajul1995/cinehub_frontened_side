@@ -17,6 +17,10 @@ export const adminRoutes: Route[] = [
         url: "/admin-dashboard/totalEarning"
       },
       {
+        title:"Create Movie",
+        url: "/admin-dashboard/createMovie"
+      },
+      {
         title:"Back Home",
         url: "/"
       }

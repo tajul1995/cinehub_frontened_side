@@ -13,7 +13,7 @@ export interface IMovie {
     id: string
   movieName: string
 
-  type: "featured" | "trending" | "popular" | "new" // extendable
+  type: string // extendable
   price : number
   categories: string[]
 
