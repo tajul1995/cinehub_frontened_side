@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
-
 import { httpClient } from "@/lib/axios/httpClient";
 
 export interface IMoviePayment {
@@ -19,7 +19,7 @@ export interface IPayment {
   };
 };
 export const getAllPayments = async () => {
-    const doctors = await httpClient.get<IPayment[]>('/review');
+    const doctors = await httpClient.get<any[]>('/booking');
     console.log(doctors, "payment server");
     return doctors;
 }

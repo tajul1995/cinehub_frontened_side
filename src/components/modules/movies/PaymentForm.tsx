@@ -1,35 +1,38 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { useState } from "react";
-// import { Movie } from "@/types";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Movie } from "./MovieDetails";
 
-type Props = {
-  movie: Movie,
-  bookingId: string,
+export default function PaymentForm({
+  movie,
+  bookingId,
+}: {
+  movie: Movie;
+  bookingId: string;
+}) {
+  const router = useRouter();
 
-
- 
-};
-
-export default function PaymentForm({ movie, bookingId }: { movie: Movie; bookingId: string }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-// console.log(bookingId,"payment from")
+
   const handlePayment = async () => {
+    if (loading) return; // prevent double click
+
     try {
       setLoading(true);
       setError("");
       setSuccess("");
 
       const res = await fetch(
-        `http://localhost:5000/api/v1/booking/initiate-payment/${bookingId}`,
+        `http://localhost:5000/api/v1/booking/${bookingId}`,
         {
-          method: "POST",
-          credentials: "include", // IMPORTANT for auth cookies
+          method: "PATCH",
+          credentials: "include", // for auth cookies
           headers: {
             "Content-Type": "application/json",
           },
@@ -37,27 +40,21 @@ export default function PaymentForm({ movie, bookingId }: { movie: Movie; bookin
       );
 
       const data = await res.json();
-      console.log(data,'payment')
+      console.log("PAYMENT RESPONSE:", data);
 
       if (!res.ok) {
         throw new Error(data?.message || "Payment failed");
       }
 
-      setSuccess("Payment initiated successfully!");
-      
-      // If backend returns payment URL (Stripe etc.)
-      if (data?.data.paymentUrl) {
-        window.location.href = data?.data?.paymentUrl;
-        await fetch(`http://localhost:5000/api/v1/payment/${bookingId}`, {
-          method: "patch",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-      }
+      setSuccess("Payment successful! Redirecting...");
+
+      // ✅ Redirect after success
+      setTimeout(() => {
+        router.replace("/dashboard/paymentHistory"); // better than push
+      }, 1200);
 
     } catch (err: any) {
+      console.error("PAYMENT ERROR:", err);
       setError(err.message);
     } finally {
       setLoading(false);
@@ -65,27 +62,31 @@ export default function PaymentForm({ movie, bookingId }: { movie: Movie; bookin
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white shadow-xl rounded-2xl p-6 space-y-4">
-      
+    <div className="max-w-md mx-auto bg-white shadow-xl rounded-2xl p-4 sm:p-6 space-y-4">
+
       {/* Movie Info */}
-      <div className="flex gap-4">
+      <div className="flex flex-col sm:flex-row gap-4">
         <Image
           src={movie.poster}
           alt={movie.movieName}
           width={100}
           height={150}
-          className="rounded-lg"
+          className="rounded-lg w-full sm:w-[100px] object-cover"
         />
 
         <div>
           <h2 className="text-lg font-bold">{movie.movieName}</h2>
-          <p className="text-gray-500">Year: {movie.publishedYear}</p>
-          <p className="text-gray-500">Duration: {movie.duration} min</p>
+          <p className="text-gray-500 text-sm">
+            Year: {movie.publishedYear}
+          </p>
+          <p className="text-gray-500 text-sm">
+            Duration: {movie.duration} min
+          </p>
         </div>
       </div>
 
       {/* Price */}
-      <div className="text-xl font-bold text-green-600">
+      <div className="text-lg sm:text-xl font-bold text-green-600">
         Price: ${movie.price}
       </div>
 
@@ -93,14 +94,20 @@ export default function PaymentForm({ movie, bookingId }: { movie: Movie; bookin
       <button
         onClick={handlePayment}
         disabled={loading}
-        className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+        className="w-full bg-blue-600 text-white py-2 sm:py-3 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
       >
         {loading ? "Processing..." : "Pay Now"}
       </button>
 
-      {/* Messages */}
-      {error && <p className="text-red-500">{error}</p>}
-      {success && <p className="text-green-500">{success}</p>}
+      {/* Error */}
+      {error && (
+        <p className="text-red-500 text-sm break-words">{error}</p>
+      )}
+
+      {/* Success */}
+      {success && (
+        <p className="text-green-500 text-sm">{success}</p>
+      )}
     </div>
   );
 }

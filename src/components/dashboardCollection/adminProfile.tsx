@@ -17,6 +17,7 @@ export default function AdminProfileCard() {
      });
      console.log(data,"admin profile client")
      const user = data?.data;
+     
   return (
     <div className="max-w-lg mx-auto mt-10 p-6 bg-yellow-400 text-amber-950 shadow-xl rounded-2xl text-center space-y-4">
       <h2 className="text-2xl font-bold mb-4"> YOUR PROFILE</h2>

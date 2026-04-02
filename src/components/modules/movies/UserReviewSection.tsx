@@ -16,11 +16,13 @@ type Movie = {
 };
 
 export default function ReviewSection({ movie }: { movie: Movie }) {
+  console.log(movie,'review')
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(5);
   const [loading, setLoading] = useState(false);
 
   const booking = movie?.bookings?.[0];
+  console.log(booking.id)
 
   const handleSubmitReview = async () => {
   

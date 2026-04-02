@@ -15,3 +15,16 @@ export const getAllComments = async () => {
     console.log(doctors, "review server");
     return doctors;
 }
+export const deleteComment = async (id: string) => {
+  const res = await httpClient.delete(
+    `/review/${id}`
+  );
+  return res.data;
+};
+export const updateComment = async (
+  id: string,
+  payload: { comment: string; rating: number }
+) => {
+  const res = await httpClient.patch(`/review/${id}`, payload);
+  return res.data;
+};

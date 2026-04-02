@@ -25,7 +25,7 @@ export default function MovieCard({ movie }: { movie: IMovie }) {
       transition={{ duration: 0.25 }}
       className="w-full"
     >
-      <Card className="relative overflow-hidden rounded-2xl group h-full flex flex-col">
+      <Card className="relative overflow-hidden rounded-2xl group h-full flex flex-col p-3 sm:p-4  space-y-2">
 
         {/* Poster */}
         <div className="relative w-full aspect-[2/3] overflow-hidden bg-gray-200">
@@ -65,7 +65,7 @@ export default function MovieCard({ movie }: { movie: IMovie }) {
 
           {/* Categories */}
           <div className="flex flex-wrap gap-1 mt-1 text-lime-300">
-            {movie.categories.slice(0, 2).map((cat, index) => (
+            {movie.categories.map((cat, index) => (
               <Badge
                 key={index}
                 variant="secondary"

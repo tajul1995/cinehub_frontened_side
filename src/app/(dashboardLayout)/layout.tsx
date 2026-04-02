@@ -2,6 +2,8 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Roles } from "@/constants/roles";
 import { getUserInfo } from "@/service/auth.service";
+import { redirect } from "next/navigation";
+
 
 
 
@@ -13,12 +15,15 @@ export default async function DashboardLayout({
    admin: React.ReactNode;
   user: React.ReactNode;
 }) {
-   const  data = await getUserInfo();
-   console.log(data)
 
-   const userInfo = data?.role;
-   
-   console.log(userInfo)
+
+  const data = await getUserInfo();
+  console.log(data);
+  if(!data){
+     redirect("/login");}
+
+  const userInfo = data?.role;
+  console.log(userInfo);
 // const userInfo = { role: Roles.admin }
 
   return (

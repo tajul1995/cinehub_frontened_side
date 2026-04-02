@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import ReviewSection from "./UserReviewSection";
@@ -26,12 +27,13 @@ type Movie = {
 };
 
 export default function SelectedMovieCard({ movie }: { movie: Movie }) {
+  console.log(movie,"selected movie")
   const approvedReviews = movie.reviews.filter(
     (r) => r.status === "APPROVED"
   );
 
   return (
-    <div className="w-full max-w-6xl mx-auto bg-amber-950 rounded-2xl shadow-lg overflow-hidden">
+    <div className=" max-w-6xl mx-auto bg-amber-950 rounded-2xl shadow-lg overflow-hidden">
       
       {/* 🔥 Responsive Layout */}
       <div className="flex flex-col md:flex-row">

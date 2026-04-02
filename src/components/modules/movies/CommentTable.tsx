@@ -25,7 +25,9 @@ export default function BookingTable() {
     const { data  } = useQuery({
        queryKey: ["payments"],
        queryFn: () => getAllPayments(),
+       
      });
+     console.log(data,"payment data")
   return (
     <div className="max-w-6xl mx-auto mt-10 overflow-x-auto">
       <table className="w-full border border-gray-200 rounded-lg overflow-hidden">
@@ -59,14 +61,14 @@ export default function BookingTable() {
               <td className="p-3">
                 <span
                   className={`px-2 py-1 rounded text-xs font-semibold ${
-                    item.booking?.status === "COMPLETED"
+                    item.status === "COMPLETED"
                       ? "bg-green-100 text-green-600"
                       : item.booking?.status === "SCHEDULED"
                       ? "bg-blue-100 text-blue-600"
                       : "bg-gray-100 text-gray-600"
                   }`}
                 >
-                  {item.booking?.status}
+                  {item.status}
                 </span>
               </td>
 
@@ -74,14 +76,14 @@ export default function BookingTable() {
               <td className="p-3">
                 <span
                   className={`px-2 py-1 rounded text-xs font-semibold ${
-                    item.booking?.paymentStatus === "PAID"
+                    item.paymentStatus === "PAID"
                       ? "bg-green-100 text-green-600"
-                      : item.booking?.paymentStatus === "UNPAID"
+                      : item.paymentStatus === "UNPAID"
                       ? "bg-red-100 text-red-600"
                       : "bg-yellow-100 text-yellow-600"
                   }`}
                 >
-                  {item.booking?.paymentStatus}
+                  {item.paymentStatus}
                 </span>
               </td>
 

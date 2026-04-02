@@ -35,7 +35,9 @@ const MovieDetailsCard = ({ movie }: { movie: Movie }) => {
   const [bookingId, setBookingId] = useState<string | undefined>(undefined);
 
   const handleBooked = async (movieId: string) => {
+
   console.log("Clicked:", movieId);
+
 
   try {
     const res = await fetch("http://localhost:5000/api/v1/booking", {
@@ -50,7 +52,7 @@ const MovieDetailsCard = ({ movie }: { movie: Movie }) => {
     // console.log("Response form movie details:", res);
 
     const data = await res.json();
-    console.log("Data:", data);
+    console.log("Data from movie details:", data);
     if(data.success){
       alert("Movie booked successfully!");
       setOpen(true);
