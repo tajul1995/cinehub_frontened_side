@@ -21,7 +21,7 @@ const SelectedMovies = () => {
        return (
     <div className="lg:max-w-7xl lg:mx-auto mt-3">
      
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1  gap-2 ">
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1  gap-2 md:gap-2 sm:gap-1">
         {data?.data?.bookings ? (
           data?.data?.bookings?.map((booking: any) => (
             <div key={booking.id}>

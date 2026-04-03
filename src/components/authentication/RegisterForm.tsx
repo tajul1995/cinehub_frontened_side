@@ -55,11 +55,11 @@ const SignupForm = ({ redirectPath }: LoginFormProps) => {
         }
     })
   return (
-    <Card className="w-full max-w-md mx-auto shadow-md">
+    <Card className="w-full max-w-md mx-auto shadow-md bg-amber-900 text-black text-bold">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl font-bold">Welcome Back!</CardTitle>
         <CardDescription>
-          Please enter your credentials to log in.
+          Please enter your credentials to Register.
         </CardDescription>
       </CardHeader>
 
@@ -146,7 +146,7 @@ const SignupForm = ({ redirectPath }: LoginFormProps) => {
           >
             {([canSubmit, isSubmitting]) => (
               <AppSubmitButton isPending={isSubmitting || isPending} pendingLabel="Register In...." disabled={!canSubmit}>
-                Log In
+                Register
               </AppSubmitButton>
             )}
           </form.Subscribe>

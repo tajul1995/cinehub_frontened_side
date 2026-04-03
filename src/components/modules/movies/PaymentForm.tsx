@@ -21,7 +21,7 @@ export default function PaymentForm({
   const [success, setSuccess] = useState("");
 
   const handlePayment = async () => {
-    if (loading) return; // prevent double click
+    if (loading) return; 
 
     try {
       setLoading(true);
@@ -32,7 +32,7 @@ export default function PaymentForm({
         `http://localhost:5000/api/v1/booking/${bookingId}`,
         {
           method: "PATCH",
-          credentials: "include", // for auth cookies
+          credentials: "include", 
           headers: {
             "Content-Type": "application/json",
           },
@@ -43,7 +43,7 @@ export default function PaymentForm({
       console.log("PAYMENT RESPONSE:", data);
 
       if (!res.ok) {
-        throw new Error(data?.message || "Payment failed");
+        throw new Error(data?.message || "Payment failed for Admin ");
       }
 
       setSuccess("Payment successful! Redirecting...");

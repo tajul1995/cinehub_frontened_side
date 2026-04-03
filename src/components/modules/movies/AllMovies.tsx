@@ -54,7 +54,7 @@ const AllMovies = () => {
         <div className="flex flex-col sm:flex-row gap-2 w-full">
           <input
             type="text"
-            placeholder="Category (History)"
+            placeholder="Category (Write category name correctly)"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             className="border p-2 rounded w-full"

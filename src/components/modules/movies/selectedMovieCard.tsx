@@ -33,7 +33,7 @@ export default function SelectedMovieCard({ movie }: { movie: Movie }) {
   );
 
   return (
-    <div className=" max-w-6xl mx-auto bg-amber-950 rounded-2xl shadow-lg overflow-hidden">
+    <div className=" lg:max-w-6xl mx-auto bg-amber-950 rounded-2xl shadow-lg overflow-hidden ">
       
       {/* 🔥 Responsive Layout */}
       <div className="flex flex-col md:flex-row">

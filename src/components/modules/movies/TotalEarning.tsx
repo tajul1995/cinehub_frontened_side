@@ -31,6 +31,7 @@ export default function DashboardChart() {
 
   return (
     <div className="w-full h-[300px] bg-yellow-500 p-4 rounded-xl shadow">
+      <h2 className="text-center text-xl text-black font-bold">total earning tk:    {data?.data?.totalRevenue} from {data?.data?.totalMoviesBooked} moivies</h2>
       <ResponsiveContainer>
         <BarChart data={chartData}>
           <XAxis dataKey="name" className="text-black text-xl font-bold" />

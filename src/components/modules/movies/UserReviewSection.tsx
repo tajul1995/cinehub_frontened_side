@@ -16,13 +16,14 @@ type Movie = {
 };
 
 export default function ReviewSection({ movie }: { movie: Movie }) {
+
   console.log(movie,'review')
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(5);
   const [loading, setLoading] = useState(false);
 
   const booking = movie?.bookings?.[0];
-  console.log(booking.id)
+  console.log(booking.id,"booking id")
 
   const handleSubmitReview = async () => {
   
@@ -48,7 +49,7 @@ export default function ReviewSection({ movie }: { movie: Movie }) {
         },
         credentials: "include",
         body: JSON.stringify({
-          movieId: booking.movieId,
+          movieId: movie.id,
           bookingId: booking.id,
           comment,
           rating,
@@ -56,6 +57,7 @@ export default function ReviewSection({ movie }: { movie: Movie }) {
       });
 
       const data = await res.json();
+      console.log(data,'from review')
 
       if (!res.ok) {
         throw new Error(data.message || "Failed to submit review");
@@ -74,14 +76,14 @@ export default function ReviewSection({ movie }: { movie: Movie }) {
 
   return (
     <div className="mt-8 max-w-xl mx-auto  shadow-md rounded-2xl p-6 border">
-      <h2 className="text-xl font-bold mb-4 text-gray-800">
+      <h2 className="text-xl font-bold mb-4 text-emerald-100">
         ⭐ Write a Review for{" "}
-        <span className="text-blue-600">{movie.movieName}</span>
+        <span className="text-emerald-100">: {movie.movieName}</span>
       </h2>
 
       {/* ⭐ Rating */}
       <div className="mb-4">
-        <label className="block text-sm font-medium mb-1 text-gray-700">
+        <label className="block text-sm font-medium mb-1 text-emerald-100">
           Rating (1 - 10)
         </label>
         <input
@@ -96,14 +98,14 @@ export default function ReviewSection({ movie }: { movie: Movie }) {
 
      
       <div className="mb-4">
-        <label className="block text-sm font-medium mb-1 text-gray-700">
+        <label className="block text-sm font-medium mb-1 text-emerald-100">
           Comment
         </label>
         <textarea
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           rows={4}
-          placeholder="Share your experience..."
+          placeholder="Share your experience ...."
           className="w-full border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
