@@ -8,6 +8,8 @@ import { Star, Clock, Calendar, PlayCircle } from "lucide-react";
 
 import { useState } from "react";
 import PaymentForm from "./PaymentForm";
+import { getUserInfo } from "@/services/auth.service";
+import { redirect } from "next/navigation";
 
  export type Movie = {
   id: string;
@@ -35,6 +37,10 @@ const MovieDetailsCard = ({ movie }: { movie: Movie }) => {
   const [bookingId, setBookingId] = useState<string | undefined>(undefined);
 
   const handleBooked = async (movieId: string) => {
+    const data = await getUserInfo();
+      console.log(data);
+      if(!data){
+         redirect("/login");}
 
   console.log("Clicked:", movieId);
 
